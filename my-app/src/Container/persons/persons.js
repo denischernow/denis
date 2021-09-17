@@ -1,16 +1,9 @@
 import React from "react";
 import "./stylesPersons/persons.scss";
-import { persons } from "./constatntPersons/constantPersons.js";
+
 import { PersonItem } from "./personsItem/personsItem.js";
-import { firstMessage } from "./constatntPersons/constantPersons.js";
 
-export function Persons() {
-	React.useEffect(() => {
-		persons.map((e) => {
-			return localStorage.setItem(e.firstName, firstMessage);
-		});
-	});
-
+export function Persons({ persons }) {
 	return (
 		<div className="persons">
 			{persons.map((el) => {
