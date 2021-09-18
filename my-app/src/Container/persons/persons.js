@@ -1,5 +1,4 @@
-import React from "react";
-import "./stylesPersons/persons.scss";
+import "./styles/persons.scss";
 
 import { PersonItem } from "./personsItem/personsItem.js";
 

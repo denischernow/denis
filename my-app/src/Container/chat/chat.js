@@ -1,37 +1,49 @@
-import React from "react";
-import "./stylesChat/chat.scss";
+import react, { useCallback, useMemo } from "react";
+import "./styles/chat.scss";
 import { Interlocutor } from "./interlocutor/interlocutor.js";
-import { Message } from "./message/message.js";
+import { MessageMyself } from "./messageMyself/messageMylef.js";
+import { MessageInterlocator } from "./messageInterlocator/messageInterlocator.js";
 import { Input } from "./input/input.js";
 
-export function Chat({ stateMessageMyself, stateMessageinterlocutor, createCorrespondence }) {
-	
+export function Chat({ myself, iterlocutor, startChat }) {
 	// The code below is for auto scrolling down messages
-	const messagesEndRef = React.useRef(null);
-	React.useEffect(() => {
-		messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
-	}, [stateMessageinterlocutor]);
+	const autoScrolling = react.useRef(null);
+	react.useEffect(() => {
+		autoScrolling.current.scrollIntoView({ behavior: "smooth" });
+	}, [iterlocutor]);
 
 	return (
 		<div className="chat">
 			<Interlocutor />
 			<div className="chat__message">
-				{[...stateMessageMyself, ...stateMessageinterlocutor]
-					.sort((a, b) => {
-						return a.dateMassage - b.dateMassage;
-					})
-					.map((el, index) => {
-						return (
-							<Message
-								children={el.textMassage}
-								key={Date.now() + index}
-								sender={el.sender}
-							/>
-						);
-					})}
-				<div ref={messagesEndRef}></div>
+				{useMemo(
+					() =>
+						[...myself, ...iterlocutor]
+							.sort((a, b) => {
+								return a.dateMassage - b.dateMassage;
+							})
+							.map((el, index) => {
+								if (el.sender === "myself") {
+									return (
+										<MessageMyself
+											children={el.textMassage}
+											key={Date.now() + index}
+										/>
+									);
+								} else {
+									return (
+										<MessageInterlocator
+											children={el.textMassage}
+											key={Date.now() + index}
+										/>
+									);
+								}
+							}),
+					[myself, iterlocutor]
+				)}
+				<div ref={autoScrolling}></div>
 			</div>
-			<Input props={createCorrespondence} />
+			<Input props={startChat} />
 		</div>
 	);
 }

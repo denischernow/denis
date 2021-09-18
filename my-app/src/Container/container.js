@@ -1,51 +1,47 @@
-import React from "react";
-import "./stylesContainer/container.scss";
+import react from "react";
+import "./styles/container.scss";
 import { Persons } from "./persons/persons.js";
-import {
-	persons,
-	firstMessages,
-	responseMassage,
-} from "../container/constantsContainer/constantContainer.js";
+import { persons, first_messages, response_massage } from "./constants/constants.js";
 import { Chat } from "./chat/chat.js";
-import { Context } from "./context.js";
-import avatar1 from "../assets/img/chat_avatar_01.jpg";
+import { personsContext } from "./context.js";
 
 export function Container() {
 	// the code below is required to add the initial message to the localStorage
-	React.useEffect(() => {
+	react.useEffect(() => {
 		persons.map((e) => {
-			return localStorage.setItem(e.firstName, firstMessages);
+			return localStorage.setItem(e.firstName, first_messages);
 		});
 	}, persons[0]);
 
 	// the code below is required for the default selection of the interlocutor
-	const [context, setContext] = React.useState(["Patrick", "Black", avatar1]);
+	const [context, setContext] = react.useState([
+		persons[0].firstName,
+		persons[0].secondName,
+		persons[0].avatar,
+	]);
 
 	// The below code is for generating correspondence
-	const [stateMessageMyself, setStateMessageMyself] = React.useState([]);
-	const [stateMessageinterlocutor, setStateMessageinterlocutor] = React.useState([]);
+	const [myself, setmyself] = react.useState([]);
+	const [iterlocutor, setInterlocutor] = react.useState([]);
 
-	const createCorrespondence = async (e) => {
+	const startChat = async (e) => {
 		if (e !== "") {
-			await sendMyselfMassage(e);
-			await responseMassageInterlocator();
+			await sendMyself(e);
+			await responseInterlocator();
 		}
 	};
 
 	// creating my message
-	const sendMyselfMassage = (e) => {
-		setStateMessageMyself([
-			...stateMessageMyself,
-			{ textMassage: e, dateMassage: Date.now(), sender: "myself" },
-		]);
+	const sendMyself = (e) => {
+		setmyself([...myself, { textMassage: e, dateMassage: Date.now(), sender: "myself" }]);
 	};
 
 	// creating the interlocutor message
-	const responseMassageInterlocator = () => {
-		setStateMessageinterlocutor([
-			...stateMessageinterlocutor,
+	const responseInterlocator = () => {
+		setInterlocutor([
+			...iterlocutor,
 			{
-				textMassage: responseMassage[Math.floor(Math.random() * responseMassage.length)],
+				textMassage: response_massage[Math.floor(Math.random() * response_massage.length)],
 				dateMassage: Date.now(),
 				sender: "interlocutor",
 			},
@@ -53,36 +49,33 @@ export function Container() {
 	};
 
 	// the code below is needed to save and then load from the localStorage when changing the interlocutor
-	React.useEffect(() => {
-		setStateMessageMyself(
+	react.useEffect(() => {
+		setmyself(
 			Object.values(JSON.parse(localStorage.getItem(context[0]))).filter((e) => {
 				return e.sender === "myself";
 			})
 		);
-		setStateMessageinterlocutor(
+		setInterlocutor(
 			Object.values(JSON.parse(localStorage.getItem(context[0]))).filter((e) => {
 				return e.sender === "interlocutor";
 			})
 		);
 	}, [context]);
-	React.useEffect(() => {
-		let arr = [...stateMessageMyself, ...stateMessageinterlocutor];
+
+	react.useEffect(() => {
+		let arr = [...myself, ...iterlocutor];
 		localStorage.setItem(context[0], JSON.stringify({ ...arr }));
-	}, [stateMessageinterlocutor]);
+	}, [iterlocutor]);
 
 	return (
-		<Context.Provider value={[context, setContext]}>
+		<personsContext.Provider value={[context, setContext]}>
 			<div className="container">
 				<div className="container__content">
 					<Persons persons={persons} />
 
-					<Chat
-						stateMessageMyself={stateMessageMyself}
-						stateMessageinterlocutor={stateMessageinterlocutor}
-						createCorrespondence={createCorrespondence}
-					/>
+					<Chat myself={myself} iterlocutor={iterlocutor} startChat={startChat} />
 				</div>
 			</div>
-		</Context.Provider>
+		</personsContext.Provider>
 	);
 }

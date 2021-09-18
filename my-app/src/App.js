@@ -1,11 +1,11 @@
-import React from "react";
+import react from "react";
 import { Container } from "./container/container.js";
-import "./stylesApp/app.scss";
+import "./styles/app.scss";
 
 export function App() {
-  return (
-    <div>
-      <Container />
-    </div>
-  );
+	return (
+		<div className="app">
+			<Container />
+		</div>
+	);
 }

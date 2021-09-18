@@ -1,8 +1,8 @@
-import React from "react";
-import "./stylesInput/input.scss";
+import react from "react";
+import "./styles/input.scss";
 
 export function Input(props) {
-	const [inputValue, setInputValue] = React.useState("");
+	const [inputValue, setInputValue] = react.useState("");
 
 	const messageInput = () => {
 		props.props(inputValue);
