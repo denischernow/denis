@@ -1,49 +1,41 @@
-import react, { useCallback, useMemo } from "react";
+import React from "react";
 import "./styles/chat.scss";
 import { Interlocutor } from "./interlocutor/interlocutor.js";
 import { MessageMyself } from "./messageMyself/messageMylef.js";
 import { MessageInterlocator } from "./messageInterlocator/messageInterlocator.js";
 import { Input } from "./input/input.js";
 
-export function Chat({ myself, iterlocutor, startChat }) {
+export function Chat({ myselfMessages, iterlocutorMessages, onStartChat }) {
 	// The code below is for auto scrolling down messages
-	const autoScrolling = react.useRef(null);
-	react.useEffect(() => {
+	const autoScrolling = React.useRef(null);
+	React.useEffect(() => {
 		autoScrolling.current.scrollIntoView({ behavior: "smooth" });
-	}, [iterlocutor]);
+	}, [iterlocutorMessages]);
+
+	// the code below allows you to memorize a value to improve performance
+	let memoMarkup;
+	React.useMemo(() => {
+		memoMarkup = [...myselfMessages, ...iterlocutorMessages]
+			.sort((a, b) => {
+				return a.DATE_MESSAGE - b.DATE_MESSAGE;
+			})
+			.map((el, index) => {
+				if (el.SENDER === "myself") {
+					return <MessageMyself children={el.TEXT_MESSAGE} key={Date.now() + index} />;
+				} else {
+					return <MessageInterlocator children={el.TEXT_MESSAGE} key={Date.now() + index} />;
+				}
+			});
+	}, [myselfMessages, iterlocutorMessages]);
 
 	return (
 		<div className="chat">
 			<Interlocutor />
 			<div className="chat__message">
-				{useMemo(
-					() =>
-						[...myself, ...iterlocutor]
-							.sort((a, b) => {
-								return a.dateMassage - b.dateMassage;
-							})
-							.map((el, index) => {
-								if (el.sender === "myself") {
-									return (
-										<MessageMyself
-											children={el.textMassage}
-											key={Date.now() + index}
-										/>
-									);
-								} else {
-									return (
-										<MessageInterlocator
-											children={el.textMassage}
-											key={Date.now() + index}
-										/>
-									);
-								}
-							}),
-					[myself, iterlocutor]
-				)}
+				{memoMarkup}
 				<div ref={autoScrolling}></div>
 			</div>
-			<Input props={startChat} />
+			<Input onStartChat={onStartChat} />
 		</div>
 	);
 }

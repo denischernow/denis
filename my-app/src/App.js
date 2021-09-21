@@ -1,4 +1,4 @@
-import react from "react";
+import React from "react";
 import { Container } from "./container/container.js";
 import "./styles/app.scss";
 

@@ -1,10 +1,10 @@
-import react from "react";
+import React from "react";
 import { personsContext } from "../../context.js";
 import "./styles/interlocutor.scss";
 
 // The code below is required to get information about a person. This information is required to switch between chats and display information about the selected person in the component "Interlocutor"//
 export function Interlocutor() {
-	const [context, setContext] = react.useContext(personsContext);
+	const [context, setContext] = React.useContext(personsContext);
 
 	return (
 		<div className="interlocutor">

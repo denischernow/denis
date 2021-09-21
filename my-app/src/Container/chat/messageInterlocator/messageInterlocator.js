@@ -1,3 +1,4 @@
+import React from "react";
 import "./styles/messageInterlocator.scss";
 
 export function MessageInterlocator({ children }) {

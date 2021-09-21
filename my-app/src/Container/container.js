@@ -1,79 +1,63 @@
-import react from "react";
+import React from "react";
 import "./styles/container.scss";
 import { Persons } from "./persons/persons.js";
-import { persons, first_messages, response_massage } from "./constants/constants.js";
+import { PERSONS } from "./constants/constants.js";
 import { Chat } from "./chat/chat.js";
 import { personsContext } from "./context.js";
+import { sendMyself, responseInterlocator, resetValue } from "./servises/servises";
 
 export function Container() {
-	// the code below is required to add the initial message to the localStorage
-	react.useEffect(() => {
-		persons.map((e) => {
-			return localStorage.setItem(e.firstName, first_messages);
-		});
-	}, persons[0]);
-
 	// the code below is required for the default selection of the interlocutor
-	const [context, setContext] = react.useState([
-		persons[0].firstName,
-		persons[0].secondName,
-		persons[0].avatar,
+	const [context, setContext] = React.useState([
+		PERSONS[0].FIRST_NAME,
+		PERSONS[0].SECOND_NAME,
+		PERSONS[0].AVATAR,
 	]);
 
-	// The below code is for generating correspondence
-	const [myself, setmyself] = react.useState([]);
-	const [iterlocutor, setInterlocutor] = react.useState([]);
-
-	const startChat = async (e) => {
+	const [myselfMessages, setMyselfMessages] = React.useState([]);
+	const [iterlocutorMessages, setIterlocutorMessages] = React.useState([]);
+	let i = [];
+	let k = [];
+	const handleStartChat = async (e) => {
 		if (e !== "") {
-			await sendMyself(e);
-			await responseInterlocator();
+			i = await sendMyself(e);
+			k = await responseInterlocator();
+			resetValue();
 		}
-	};
-
-	// creating my message
-	const sendMyself = (e) => {
-		setmyself([...myself, { textMassage: e, dateMassage: Date.now(), sender: "myself" }]);
-	};
-
-	// creating the interlocutor message
-	const responseInterlocator = () => {
-		setInterlocutor([
-			...iterlocutor,
-			{
-				textMassage: response_massage[Math.floor(Math.random() * response_massage.length)],
-				dateMassage: Date.now(),
-				sender: "interlocutor",
-			},
-		]);
+		setMyselfMessages([...myselfMessages, ...i]);
+		setIterlocutorMessages([...iterlocutorMessages, ...k]);
 	};
 
 	// the code below is needed to save and then load from the localStorage when changing the interlocutor
-	react.useEffect(() => {
-		setmyself(
+	React.useEffect(() => {
+		setMyselfMessages(
 			Object.values(JSON.parse(localStorage.getItem(context[0]))).filter((e) => {
-				return e.sender === "myself";
+				return e.SENDER === "myself";
 			})
 		);
-		setInterlocutor(
+		setIterlocutorMessages(
 			Object.values(JSON.parse(localStorage.getItem(context[0]))).filter((e) => {
-				return e.sender === "interlocutor";
+				return e.SENDER === "interlocutor";
 			})
 		);
 	}, [context]);
 
-	react.useEffect(() => {
-		let arr = [...myself, ...iterlocutor];
+	React.useEffect(() => {
+		let arr = [...myselfMessages, ...iterlocutorMessages];
 		localStorage.setItem(context[0], JSON.stringify({ ...arr }));
-	}, [iterlocutor]);
+	}, [iterlocutorMessages]);
 
 	return (
 		<personsContext.Provider value={[context, setContext]}>
 			<div className="container">
 				<div className="container__content">
-					<Persons persons={persons} />
+					<Persons persons={PERSONS} />
 
-					<Chat myself={myself} iterlocutor={iterlocutor} startChat={startChat} />
+					<Chat
+						myselfMessages={myselfMessages}
+						iterlocutorMessages={iterlocutorMessages}
+						onStartChat={handleStartChat}
+					/>
 				</div>
 			</div>
 		</personsContext.Provider>

@@ -1,9 +1,9 @@
-import react from "react";
+import React from "react";
 import { personsContext } from "../../context.js";
 import "./styles/personItem.scss";
 
 export function PersonItem({ firstName, secondName, avatar }) {
-	const [context, setContext] = react.useContext(personsContext);
+	const [context, setContext] = React.useContext(personsContext);
 
 	return (
 		<div onClick={() => setContext([firstName, secondName, avatar])} className="person">

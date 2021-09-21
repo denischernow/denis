@@ -1,11 +1,11 @@
-import react from "react";
+import React from "react";
 import "./styles/input.scss";
 
-export function Input(props) {
-	const [inputValue, setInputValue] = react.useState("");
+export function Input(onStartChat) {
+	const [inputValue, setInputValue] = React.useState("");
 
 	const messageInput = () => {
-		props.props(inputValue);
+		onStartChat.onStartChat(inputValue);
 		setInputValue("");
 	};
 

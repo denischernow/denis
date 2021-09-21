@@ -1,29 +1,29 @@
-import avatar_1 from "../../assets/img/chat_avatar_01.jpg";
-import avatar_2 from "../../assets/img/chat_avatar_02.jpg";
-import avatar_3 from "../../assets/img/chat_avatar_03.jpg";
-import avatar_4 from "../../assets/img/chat_avatar_04.jpg";
-import avatar_5 from "../../assets/img/chat_avatar_05.jpg";
+import AVATAR_1 from "../../assets/img/chat_avatar_01.jpg";
+import AVATAR_2 from "../../assets/img/chat_avatar_02.jpg";
+import AVATAR_3 from "../../assets/img/chat_avatar_03.jpg";
+import AVATAR_4 from "../../assets/img/chat_avatar_04.jpg";
+import AVATAR_5 from "../../assets/img/chat_avatar_05.jpg";
 
-export const persons = [
-	{ id: 1, firstName: "Patrick", secondName: "Black", avatar: avatar_1 },
-	{ id: 2, firstName: "Stacy", secondName: "Gray", avatar: avatar_2 },
-	{ id: 3, firstName: "Linda", secondName: "White", avatar: avatar_3 },
-	{ id: 4, firstName: "Tony", secondName: "Freeman", avatar: avatar_4 },
-	{ id: 5, firstName: "Leslie", secondName: "Brown", avatar: avatar_5 },
+export const PERSONS = [
+	{ ID: 1, FIRST_NAME: "Patrick", SECOND_NAME: "Black", AVATAR: AVATAR_1 },
+	{ ID: 2, FIRST_NAME: "Stacy", SECOND_NAME: "Gray", AVATAR: AVATAR_2 },
+	{ ID: 3, FIRST_NAME: "Linda", SECOND_NAME: "White", AVATAR: AVATAR_3 },
+	{ ID: 4, FIRST_NAME: "Tony", SECOND_NAME: "Freeman", AVATAR: AVATAR_4 },
+	{ ID: 5, FIRST_NAME: "Leslie", SECOND_NAME: "Brown", AVATAR: AVATAR_5 },
 ];
 
-export const first_messages = `{"0":${JSON.stringify({
-	textMassage: "Hello!",
-	dateMassage: Date.now(),
-	sender: "myself",
+export const FIRST_MESSAGES = `{"0":${JSON.stringify({
+	TEXT_MESSAGE: "Hello!",
+	DATE_MESSAGE: Date.now(),
+	SENDER: "myself",
 })},
 "1":${JSON.stringify({
-	textMassage: "Hello!",
-	dateMassage: Date.now(),
-	sender: "interlocutor",
+	TEXT_MESSAGE: "Hello!",
+	DATE_MESSAGE: Date.now(),
+	SENDER: "interlocutor",
 })}}`;
 
-export const response_massage = [
+export const RESPONSE_MESSAGES = [
 	"Hello glad to see you!",
 	"Glad to talk to you!",
 	"Who are you?",
