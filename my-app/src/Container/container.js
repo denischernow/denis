@@ -4,7 +4,7 @@ import { Persons } from "./persons/persons.js";
 import { PERSONS } from "./constants/constants.js";
 import { Chat } from "./chat/chat.js";
 import { personsContext } from "./context.js";
-import { sendMyself, responseInterlocator, resetValue } from "./servises/servises";
+import { sendMyself, responseInterlocator, resetValue } from "./servises/services";
 
 export function Container() {
 	// the code below is required for the default selection of the interlocutor
@@ -22,7 +22,7 @@ export function Container() {
 		if (e !== "") {
 			i = await sendMyself(e);
 			k = await responseInterlocator();
-			resetValue();
+			await resetValue();
 		}
 		setMyselfMessages([...myselfMessages, ...i]);
 		setIterlocutorMessages([...iterlocutorMessages, ...k]);
