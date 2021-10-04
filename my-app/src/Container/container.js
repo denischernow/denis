@@ -4,7 +4,8 @@ import { Persons } from "./persons/persons.js";
 import { PERSONS } from "./constants/constants.js";
 import { Chat } from "./chat/chat.js";
 import { personsContext } from "./context.js";
-import { sendMyself, responseInterlocator, resetValue } from "./servises/services";
+// import { sendMyself, responseInterlocator, resetValue } from "./servises/services";
+import { Correspondence } from "./servises/services.js";
 
 export function Container() {
 	// the code below is required for the default selection of the interlocutor
@@ -20,9 +21,9 @@ export function Container() {
 	let k = [];
 	const handleStartChat = async (e) => {
 		if (e !== "") {
-			i = await sendMyself(e);
-			k = await responseInterlocator();
-			await resetValue();
+			i = await Correspondence.sendMyself(e);
+			k = await Correspondence.responseInterlocator();
+			await Correspondence.resetValue();
 		}
 		setMyselfMessages([...myselfMessages, ...i]);
 		setIterlocutorMessages([...iterlocutorMessages, ...k]);
@@ -46,6 +47,7 @@ export function Container() {
 		let arr = [...myselfMessages, ...iterlocutorMessages];
 		localStorage.setItem(context[0], JSON.stringify({ ...arr }));
 	}, [iterlocutorMessages]);
+
 
 	return (
 		<personsContext.Provider value={[context, setContext]}>

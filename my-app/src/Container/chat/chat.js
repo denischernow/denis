@@ -1,7 +1,7 @@
 import React from "react";
 import "./styles/chat.scss";
 import { Interlocutor } from "./interlocutor/interlocutor.js";
-import { MessageMyself } from "./messageMyself/messageMylef.js";
+import { MessageMyself } from "./messageMyself/messageMyself.js";
 import { MessageInterlocator } from "./messageInterlocator/messageInterlocator.js";
 import { Input } from "./input/input.js";
 

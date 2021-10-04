@@ -9,37 +9,73 @@ export function firstMessagesInitial() {
 firstMessagesInitial();
 
 
+
+// export function sendMyself(e) {
+// 	return new Promise((resolve) => {
+// 		resolve(
+// 			(myselfMessages = [
+// 				...myselfMessages,
+// 				{ TEXT_MESSAGE: e, DATE_MESSAGE: Date.now(), SENDER: "myself" },
+// 			])
+// 		);
+// 	});
+// }
+
+// export function responseInterlocator() {
+// 	return new Promise((resolve) => {
+// 		resolve(
+// 			(iterlocutorMessages = [
+// 				...iterlocutorMessages,
+// 				{
+// 					TEXT_MESSAGE:
+// 						RESPONSE_MESSAGES[Math.floor(Math.random() * RESPONSE_MESSAGES.length)],
+// 					DATE_MESSAGE: Date.now(),
+// 					SENDER: "interlocutor",
+// 				},
+// 			])
+// 		);
+// 	});
+// }
+
+// export function resetValue() {
+// 	return new Promise((resolve) => {
+// 		resolve((myselfMessages = []), (iterlocutorMessages = []));
+// 	});
+// }
+
 let myselfMessages = [];
-export function sendMyself(e) {
-	return new Promise((resolve) => {
-		resolve(
-			(myselfMessages = [
-				...myselfMessages,
-				{ TEXT_MESSAGE: e, DATE_MESSAGE: Date.now(), SENDER: "myself" },
-			])
-		);
-	});
-}
-
 let iterlocutorMessages = [];
-export function responseInterlocator() {
-	return new Promise((resolve) => {
-		resolve(
-			(iterlocutorMessages = [
-				...iterlocutorMessages,
-				{
-					TEXT_MESSAGE:
-						RESPONSE_MESSAGES[Math.floor(Math.random() * RESPONSE_MESSAGES.length)],
-					DATE_MESSAGE: Date.now(),
-					SENDER: "interlocutor",
-				},
-			])
-		);
-	});
+
+export class Correspondence {
+	static sendMyself = (e) => {
+		return new Promise((resolve) => {
+			resolve(
+				(myselfMessages = [
+					...myselfMessages,
+					{ TEXT_MESSAGE: e, DATE_MESSAGE: Date.now(), SENDER: "myself" },
+				])
+			);
+		});
+	};
+	static responseInterlocator = () => {
+		return new Promise((resolve) => {
+			resolve(
+				(iterlocutorMessages = [
+					...iterlocutorMessages,
+					{
+						TEXT_MESSAGE:
+							RESPONSE_MESSAGES[Math.floor(Math.random() * RESPONSE_MESSAGES.length)],
+						DATE_MESSAGE: Date.now(),
+						SENDER: "interlocutor",
+					},
+				])
+			);
+		});
+	};
+	static resetValue = () => {
+		return new Promise((resolve) => {
+			resolve((myselfMessages = []), (iterlocutorMessages = []));
+		});
+	};
 }
 
-export function resetValue() {
-	return new Promise((resolve) => {
-		resolve((myselfMessages = []), (iterlocutorMessages = []));
-	});
-}
