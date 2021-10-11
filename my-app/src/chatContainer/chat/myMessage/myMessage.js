@@ -1,7 +1,7 @@
 import React from "react";
-import "./styles/messageMyself.scss";
+import "./styles/myMessage.scss";
 
-export function MessageMyself({ children }) {
+export function MyMessage({ children }) {
 	return (
 		<div className="messages">
 			<div className="messages__myself">{children}</div>

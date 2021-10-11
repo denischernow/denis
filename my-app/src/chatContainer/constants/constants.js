@@ -15,12 +15,12 @@ export const PERSONS = [
 export const FIRST_MESSAGES = `{"0":${JSON.stringify({
 	TEXT_MESSAGE: "Hello!",
 	DATE_MESSAGE: Date.now(),
-	SENDER: "myself",
+	AUTHOR: "me",
 })},
 "1":${JSON.stringify({
 	TEXT_MESSAGE: "Hello!",
 	DATE_MESSAGE: Date.now(),
-	SENDER: "interlocutor",
+	AUTHOR: "interlocutor",
 })}}`;
 
 export const RESPONSE_MESSAGES = [

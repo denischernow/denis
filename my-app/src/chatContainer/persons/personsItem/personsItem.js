@@ -1,16 +1,16 @@
 import React from "react";
-import { personsContext } from "../../context.js";
+import { personsContext } from "../personsContext.js";
 import "./styles/personItem.scss";
 
 export function PersonItem({ firstName, secondName, avatar }) {
-	const [, setContext] = React.useContext(personsContext);
+	const [, setSelectedPerson] = React.useContext(personsContext);
 
-	const memoizedContext = React.useCallback(() => {
-		setContext([firstName, secondName, avatar]);
+	const handeClickPerson = React.useCallback(() => {
+		setSelectedPerson([firstName, secondName, avatar]);
 	}, [firstName, secondName, avatar]);
 
 	return (
-		<div onClick={memoizedContext} className="person">
+		<div onClick={handeClickPerson} className="person">
 			<div className="person__name">
 				{firstName} {secondName}
 			</div>

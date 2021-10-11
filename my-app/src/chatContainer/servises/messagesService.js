@@ -1,11 +1,11 @@
 import { PERSONS, FIRST_MESSAGES, RESPONSE_MESSAGES } from "../constants/constants.js";
 
 class MessagesService {
-	constructor(value) {
-		this.myselfMessages = value;
-		this.iterlocutorMessages = value;
-		if (localStorage.getItem("Patrick") === null) {
-			return PERSONS.forEach((e) => {
+	constructor() {
+		this.messages = [];
+
+		if (localStorage.key(1) === null) {
+			PERSONS.forEach((e) => {
 				localStorage.setItem(`${e.FIRST_NAME}`, FIRST_MESSAGES);
 			});
 		}
@@ -14,9 +14,9 @@ class MessagesService {
 	getMyMessage = (e) => {
 		return new Promise((resolve) => {
 			resolve(
-				(this.myselfMessages = [
-					...this.myselfMessages,
-					{ TEXT_MESSAGE: e, DATE_MESSAGE: Date.now(), SENDER: "myself" },
+				(this.messages = [
+					...this.messages,
+					{ TEXT_MESSAGE: e, DATE_MESSAGE: Date.now(), AUTHOR: "me" },
 				])
 			);
 		});
@@ -25,12 +25,12 @@ class MessagesService {
 	responseMessage = () => {
 		return new Promise((resolve) => {
 			resolve(
-				(this.iterlocutorMessages = [
-					...this.iterlocutorMessages,
+				(this.messages = [
+					...this.messages,
 					{
 						TEXT_MESSAGE: RESPONSE_MESSAGES[Math.floor(Math.random() * RESPONSE_MESSAGES.length)],
 						DATE_MESSAGE: Date.now(),
-						SENDER: "interlocutor",
+						AUTHOR: "interlocutor",
 					},
 				])
 			);
@@ -39,9 +39,9 @@ class MessagesService {
 
 	resetValue = () => {
 		return new Promise((resolve) => {
-			resolve((this.myselfMessages = []), (this.iterlocutorMessages = []));
+			resolve((this.messages = []));
 		});
 	};
 }
 
-export const messagesService = new MessagesService([]);
+export const messagesService = new MessagesService();
