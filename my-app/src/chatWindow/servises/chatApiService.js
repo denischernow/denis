@@ -1,4 +1,4 @@
-import { PERSONS, FIRST_MESSAGES, RESPONSE_MESSAGES } from "../constants/constants.js";
+import { PERSONS, FIRST_MESSAGES, RESPONSE_MESSAGES } from "../constants/chatConstants.js";
 
 class MessagesService {
 	constructor() {
@@ -11,18 +11,18 @@ class MessagesService {
 		}
 	}
 
-	getMyMessage = (e) => {
+	getMyMessage = (textMyMessage) => {
 		return new Promise((resolve) => {
 			resolve(
 				(this.messages = [
 					...this.messages,
-					{ TEXT_MESSAGE: e, DATE_MESSAGE: Date.now(), AUTHOR: "me" },
+					{ TEXT_MESSAGE: textMyMessage, DATE_MESSAGE: Date.now(), AUTHOR: "me" },
 				])
 			);
 		});
 	};
 
-	responseMessage = () => {
+	responseMessage = (selectedPerson) => {
 		return new Promise((resolve) => {
 			resolve(
 				(this.messages = [
@@ -30,7 +30,7 @@ class MessagesService {
 					{
 						TEXT_MESSAGE: RESPONSE_MESSAGES[Math.floor(Math.random() * RESPONSE_MESSAGES.length)],
 						DATE_MESSAGE: Date.now(),
-						AUTHOR: "interlocutor",
+						AUTHOR: selectedPerson[0],
 					},
 				])
 			);
@@ -38,6 +38,7 @@ class MessagesService {
 	};
 
 	resetValue = () => {
+	
 		return new Promise((resolve) => {
 			resolve((this.messages = []));
 		});

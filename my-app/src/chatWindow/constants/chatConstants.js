@@ -20,7 +20,7 @@ export const FIRST_MESSAGES = `{"0":${JSON.stringify({
 "1":${JSON.stringify({
 	TEXT_MESSAGE: "Hello!",
 	DATE_MESSAGE: Date.now(),
-	AUTHOR: "interlocutor",
+	AUTHOR: "",
 })}}`;
 
 export const RESPONSE_MESSAGES = [

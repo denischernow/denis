@@ -1,9 +1,9 @@
 import React from "react";
-import "./styles/persons.scss";
+import "./styles/personsAside.scss";
 
 import { PersonItem } from "./personsItem/personsItem.js";
 
-export function Persons({ persons }) {
+export function PersonsAside({ persons }) {
 	return (
 		<div className="persons">
 			{persons.map((el) => {
