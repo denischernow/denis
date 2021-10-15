@@ -1,0 +1,38 @@
+@mixin commonParametersMessages {
+	position: relative;
+	min-height: 3rem;
+	height: max-content;
+	width: 70%;
+	padding: 1rem;
+	border-radius: 0.5rem;
+	box-shadow: -1px -1px 1px rgba(255, 255, 255, 0.1), 3px 3px 3px rgba(0, 0, 0, 0.5),
+		inset -2px -2px 2px rgba(255, 255, 255, 0.2), inset 1px 1px 1px rgba(0, 0, 0, 0.5);
+	user-select: all;
+}
+
+@mixin commonParametersAfter {
+	position: absolute;
+
+	width: 0;
+	bottom: 100%;
+	border: solid transparent;
+	content: " ";
+	border-width: 10px;
+}
+
+.messages__myself {
+	@include commonParametersMessages;
+
+	margin: 1rem 0rem 1rem 28%;
+	background-color: #86bb71;
+	word-wrap: break-word;
+
+	&::after {
+		@include commonParametersAfter;
+		height: 0;
+		margin-left: -10px;
+		left: 94%;
+		pointer-events: none;
+		border-bottom-color: #86bb71;
+	}
+}

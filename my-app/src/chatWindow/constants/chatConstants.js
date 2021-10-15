@@ -30,3 +30,5 @@ export const RESPONSE_MESSAGES = [
 	"Lets communicate!",
 	"You are a pleasant conversationalist!",
 ];
+
+export const AUTHOR = ["me", "notMe"];

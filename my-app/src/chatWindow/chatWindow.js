@@ -1,11 +1,16 @@
 import React from "react";
 import "./styles/chatWindow.scss";
-import { PersonsAside } from "./personsAside/personsAside.js";
+import { PersonsAside } from "./components/personsAside/personsAside.js";
 import { PERSONS } from "./constants/chatConstants.js";
-import { ChatBody } from "./chatBody/chatBody.js";
-import { personsContext } from "./personsAside/personsContext.js";
 
-import { messagesService } from "./servises/chatApiService.js";
+import { personsContext } from "./components/personsAside/personsContext.js";
+
+import { SelectedPerson } from "./components/selectedPersonSection/selectedPerson.js";
+import { Messages } from "./components/messages/messages.js";
+import { InputSection } from "./components/inputSection/inputSection.js";
+import { localStorageService } from "./services/localStorageService";
+import { chatApiService } from "./services/chatApiService.js";
+import { observable } from "./services/observableService";
 
 export function ChatWindow() {
 	// the code below is required for the default selection of the interlocutor
@@ -15,34 +20,52 @@ export function ChatWindow() {
 		PERSONS[0].AVATAR,
 	]);
 
-	// the code below simulates a request to the server and receiving a response (in the form of sending a message and receiving a message)
-	const [allMessages, setAllMessage] = React.useState([]);
+	// the code below is required to initialize the first message and subscribe observable
+	React.useEffect(() => {
+		observable.subscribe(chatApiService.responseMessage);
+		chatApiService.initFirstMessageLocalStorage();
+	}, []);
 
-	const handleStartChat = async (e) => {
-		let messages = [];
-		if (e !== "") {
-			await messagesService.getMyMessage(e);
-			messages = await messagesService.responseMessage(selectedPerson);
-			await messagesService.resetValue();
+	// the code below simulates a request to the server and receiving a response (in the form of sending a message and receiving a message)
+	const [messages, setAllMessage] = React.useState([]);
+
+	const handleStartChat = async (textMyMessage) => {
+		if (textMyMessage !== "") {
+			observable.fireSet(chatApiService.getMyMessage(textMyMessage));
 		}
-		setAllMessage([...allMessages, ...messages]);
+		setTimeout(() => {
+			setAllMessage([...messages, ...observable.get()]);
+		}, 400);
 	};
 
 	// the code below is needed to save and then load from the localStorage when changing the interlocutor
 	React.useEffect(() => {
-		setAllMessage(Object.values(JSON.parse(localStorage.getItem(selectedPerson[0]))));
+		localStorageService.getItemToLocalStorage(setAllMessage, selectedPerson);
 	}, [selectedPerson]);
+
 	React.useEffect(() => {
-		localStorage.setItem(selectedPerson[0], JSON.stringify({ ...allMessages }));
-	}, [allMessages]);
+		localStorageService.setItemToLocalStorage(selectedPerson, messages);
+	}, [messages]);
+
+	// The code below is for auto scrolling down messages
+	const autoScrolling = React.useRef(null);
+	React.useEffect(() => {
+		autoScrolling.current.scrollIntoView({ behavior: "smooth" });
+	}, [messages]);
 
 	return (
 		<personsContext.Provider value={[selectedPerson, setSelectedPerson]}>
 			<div className="container">
 				<div className="container__content">
 					<PersonsAside persons={PERSONS} />
-
-					<ChatBody allMessages={allMessages} onStartChat={handleStartChat} />
+					<div className="chat">
+						<SelectedPerson />
+						<div className="chat__message">
+							<Messages messages={messages} />
+							<div ref={autoScrolling}></div>
+						</div>
+						<InputSection onStartChat={handleStartChat} />
+					</div>
 				</div>
 			</div>
 		</personsContext.Provider>
