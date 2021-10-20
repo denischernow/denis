@@ -12,23 +12,4 @@ export const PERSONS = [
 	{ ID: 5, FIRST_NAME: "Leslie", SECOND_NAME: "Brown", AVATAR: AVATAR_5 },
 ];
 
-export const FIRST_MESSAGES = `{"0":${JSON.stringify({
-	TEXT_MESSAGE: "Hello!",
-	DATE_MESSAGE: Date.now(),
-	AUTHOR: "me",
-})},
-"1":${JSON.stringify({
-	TEXT_MESSAGE: "Hello!",
-	DATE_MESSAGE: Date.now(),
-	AUTHOR: "",
-})}}`;
-
-export const RESPONSE_MESSAGES = [
-	"Hello glad to see you!",
-	"Glad to talk to you!",
-	"Who are you?",
-	"Lets communicate!",
-	"You are a pleasant conversationalist!",
-];
-
 export const AUTHOR = ["me", "notMe"];
