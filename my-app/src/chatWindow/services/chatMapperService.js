@@ -1,5 +1,5 @@
 class ChatMapperService {
-	mapMyMessage = (textMyMessage, AUTHOR) => {
+	mapToDTO = (textMyMessage, AUTHOR) => {
 		return [
 			{
 				TEXT_MESSAGE: textMyMessage,
@@ -9,7 +9,7 @@ class ChatMapperService {
 		];
 	};
 
-	mapNotMyMessage = (json, AUTHOR) => {
+	mapToUI = (json, AUTHOR) => {
 		return [
 			{
 				TEXT_MESSAGE: json.title,
