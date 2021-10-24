@@ -26,6 +26,6 @@ export function Messages({ messages }) {
 				}
 			});
 	}, [messages]);
-
+	
 	return <>{handleMessages}</>;
 }

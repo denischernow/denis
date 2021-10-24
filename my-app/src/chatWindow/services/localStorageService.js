@@ -1,16 +1,23 @@
 import { PERSONS } from "../constants/chatConstants.js";
 class LocalStorageService {
-	setItemToLocalStorage = (selectedPerson, messages, i, k) => {
-		localStorage.setItem(selectedPerson[0], JSON.stringify({ ...messages, ...i, ...k }));
+	setItemToLocalStorage = (selectedPerson, lastMyMessage, lastResponseMessage, messages) => {
+		localStorage.setItem(
+			selectedPerson[0],
+			JSON.stringify({
+				...messages,
+				...lastMyMessage,
+				...lastResponseMessage,
+			})
+		);
 	};
 
-	getItemToLocalStorage = (setAllMessage, selectedPerson) => {
+	getItemToLocalStorage = (selectedPerson) => {
 		for (let i = 0; i < PERSONS.length; i++) {
 			if (localStorage.key(i) === null) {
 				localStorage.setItem(selectedPerson[0], "{}");
 			}
 		}
-		setAllMessage(Object.values(JSON.parse(localStorage.getItem(selectedPerson[0]))));
+		return Object.values(JSON.parse(localStorage.getItem(selectedPerson[0])));
 	};
 }
 

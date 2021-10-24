@@ -24,21 +24,21 @@ export function ChatWindow() {
 
 	const handleSendMessage = async (textMyMessage) => {
 		if (textMyMessage !== "") {
-			let i = await chatApiService.sendMassage(textMyMessage, selectedPerson, messages);
-			setMessage([...messages, ...i]);
+			setMessage(await chatApiService.sendMassage(textMyMessage, selectedPerson, messages));
 		}
 	};
 
 	// the code below is needed to save and then load from the localStorage when changing the interlocutor
 	React.useEffect(() => {
-		chatApiService.getItemToLocalStorage(setMessage, selectedPerson);
+		setMessage(chatApiService.getItemToLocalStorage(selectedPerson));
 	}, [selectedPerson]);
 
-	// The code below is for auto scrolling down messages
+	// The code below is for auto scrolling down messages and to start the service to send messages from the bot
 	const autoScrolling = React.useRef(null);
 	React.useEffect(() => {
 		autoScrolling.current.scrollIntoView({ behavior: "smooth" });
-	}, [messages]);
+		chatApiService.autoMessage(selectedPerson, setMessage);
+	}, [messages, selectedPerson]);
 
 	return (
 		<personsContext.Provider value={[selectedPerson, setSelectedPerson]}>
