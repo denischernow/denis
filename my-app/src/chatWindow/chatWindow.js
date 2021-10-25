@@ -37,8 +37,11 @@ export function ChatWindow() {
 	const autoScrolling = React.useRef(null);
 	React.useEffect(() => {
 		autoScrolling.current.scrollIntoView({ behavior: "smooth" });
+	}, [messages]);
+
+	React.useEffect(() => {
 		chatApiService.autoMessage(selectedPerson, setMessage);
-	}, [messages, selectedPerson]);
+	}, [messages]);
 
 	return (
 		<personsContext.Provider value={[selectedPerson, setSelectedPerson]}>

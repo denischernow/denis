@@ -2,7 +2,7 @@ import React from "react";
 import "./style/messages.scss";
 import { AUTHOR } from "../../constants/chatConstants";
 import { MessageMyself } from "../messages/messageMyself/messageMyself.js";
-import { MessageAther } from "../messages/messageAther/messageAther.js";
+import { MessageOther } from "./messageOther/messageOther.js";
 
 export function Messages({ messages }) {
 	let handleMessages = React.useMemo(() => {
@@ -20,7 +20,7 @@ export function Messages({ messages }) {
 				} else {
 					return (
 						<div className="messages">
-							<MessageAther key={Date.now() + index} children={el.TEXT_MESSAGE} />
+							<MessageOther key={Date.now() + index} children={el.TEXT_MESSAGE} />
 						</div>
 					);
 				}

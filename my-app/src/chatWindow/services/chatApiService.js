@@ -1,6 +1,6 @@
 import { AUTHOR, PERSONS } from "../constants/chatConstants.js";
 import { localStorageService } from "./localStorageService.js";
-import { chatMapperService } from "./chatMapperService.js";
+import { chatMapper } from "./chatMapper.js";
 
 class ChatApiService {
 	constructor() {
@@ -34,14 +34,14 @@ class ChatApiService {
 
 	sendMyMessage = (textMyMessage) => {
 		return new Promise((resolve) => {
-			resolve(chatMapperService.mapMyMessage(textMyMessage, AUTHOR));
+			resolve(chatMapper.mapToDTO(textMyMessage, AUTHOR));
 		});
 	};
 	getNotMyMessage = () => {
 		return fetch(`https://jsonplaceholder.typicode.com/posts/${Math.floor(Math.random() * 50)}`)
 			.then((response) => response.json())
 			.then((json) => {
-				return chatMapperService.mapNotMyMessage(json, AUTHOR);
+				return chatMapper.mapToUI(json, AUTHOR);
 			});
 	};
 

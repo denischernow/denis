@@ -1,4 +1,4 @@
-class ChatMapperService {
+class ChatMapper {
 	mapToDTO = (textMyMessage, AUTHOR) => {
 		return [
 			{
@@ -20,4 +20,4 @@ class ChatMapperService {
 	};
 }
 
-export const chatMapperService = new ChatMapperService();
+export const chatMapper = new ChatMapper();
